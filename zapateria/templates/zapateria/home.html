@@ -1,0 +1,20 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Inicio - Zapatería{% endblock %}
+
+{% block content %}
+<h1>Sistema de Zapatería</h1>
+<p>Administración de categorías, marcas, productos y ventas.</p>
+
+<ul>
+    <li>Categorías: {{ total_categorias }}</li>
+    <li>Marcas: {{ total_marcas }}</li>
+    <li>Productos: {{ total_productos }}</li>
+    <li>Ventas: {{ total_ventas }}</li>
+</ul>
+
+<p>
+    <a class="btn" href="{% url 'producto_list' %}">Ver productos</a>
+    <a class="btn" href="{% url 'venta_list' %}">Ver ventas</a>
+</p>
+{% endblock %}
