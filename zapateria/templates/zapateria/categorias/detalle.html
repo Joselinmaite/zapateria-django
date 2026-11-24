@@ -1,0 +1,27 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}{{ categoria.nombre }}{% endblock %}
+
+{% block content %}
+<h1>{{ categoria.nombre }}</h1>
+<p>{{ categoria.descripcion }}</p>
+
+<h3>Productos de esta categoría</h3>
+<ul>
+    {% for producto in categoria.productos.all %}
+    <li><a href="{% url 'producto_detail' producto.pk %}">{{ producto.nombre }}</a> - {{ producto.marca }}</li>
+    {% empty %}
+    <li>No hay productos en esta categoría.</li>
+    {% endfor %}
+</ul>
+
+<div class="actions">
+    <a class="btn" href="{% url 'categoria_list' %}">Volver al listado</a>
+    {% if perms.zapateria.change_categoria %}
+    <a class="btn" href="{% url 'categoria_update' categoria.pk %}">Editar</a>
+    {% endif %}
+    {% if perms.zapateria.delete_categoria %}
+    <a class="btn btn-danger" href="{% url 'categoria_delete' categoria.pk %}">Eliminar</a>
+    {% endif %}
+</div>
+{% endblock %}

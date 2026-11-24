@@ -1,0 +1,16 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<h1>{{ titulo }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="actions">
+        <button type="submit" class="btn">Guardar</button>
+        <a class="btn" href="{% url 'categoria_list' %}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

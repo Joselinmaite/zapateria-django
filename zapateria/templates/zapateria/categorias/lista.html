@@ -1,0 +1,42 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Categorías{% endblock %}
+
+{% block content %}
+<h1>Categorías</h1>
+
+{% if perms.zapateria.add_categoria %}
+<p><a class="btn" href="{% url 'categoria_create' %}">Nueva categoría</a></p>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Productos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for categoria in categorias %}
+        <tr>
+            <td><a href="{% url 'categoria_detail' categoria.pk %}">{{ categoria.nombre }}</a></td>
+            <td>{{ categoria.descripcion|truncatewords:15 }}</td>
+            <td>{{ categoria.productos.count }}</td>
+            <td>
+                <a class="btn" href="{% url 'categoria_detail' categoria.pk %}">Ver</a>
+                {% if perms.zapateria.change_categoria %}
+                <a class="btn" href="{% url 'categoria_update' categoria.pk %}">Editar</a>
+                {% endif %}
+                {% if perms.zapateria.delete_categoria %}
+                <a class="btn btn-danger" href="{% url 'categoria_delete' categoria.pk %}">Eliminar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No hay categorías registradas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

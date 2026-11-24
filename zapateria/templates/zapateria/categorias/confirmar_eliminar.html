@@ -1,0 +1,14 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Eliminar categoría{% endblock %}
+
+{% block content %}
+<h1>Eliminar categoría</h1>
+<p>¿Seguro que quieres eliminar la categoría <strong>{{ categoria.nombre }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a class="btn" href="{% url 'categoria_detail' categoria.pk %}">Cancelar</a>
+</form>
+{% endblock %}

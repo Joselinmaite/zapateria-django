@@ -1,0 +1,42 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Marcas{% endblock %}
+
+{% block content %}
+<h1>Marcas</h1>
+
+{% if perms.zapateria.add_marca %}
+<p><a class="btn" href="{% url 'marca_create' %}">Nueva marca</a></p>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>País de origen</th>
+            <th>Productos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for marca in marcas %}
+        <tr>
+            <td><a href="{% url 'marca_detail' marca.pk %}">{{ marca.nombre }}</a></td>
+            <td>{{ marca.pais_origen }}</td>
+            <td>{{ marca.productos.count }}</td>
+            <td>
+                <a class="btn" href="{% url 'marca_detail' marca.pk %}">Ver</a>
+                {% if perms.zapateria.change_marca %}
+                <a class="btn" href="{% url 'marca_update' marca.pk %}">Editar</a>
+                {% endif %}
+                {% if perms.zapateria.delete_marca %}
+                <a class="btn btn-danger" href="{% url 'marca_delete' marca.pk %}">Eliminar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No hay marcas registradas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
