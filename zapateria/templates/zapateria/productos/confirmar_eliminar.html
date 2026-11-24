@@ -1,0 +1,14 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Eliminar producto{% endblock %}
+
+{% block content %}
+<h1>Eliminar producto</h1>
+<p>¿Seguro que quieres eliminar el producto <strong>{{ producto.nombre }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a class="btn" href="{% url 'producto_detail' producto.pk %}">Cancelar</a>
+</form>
+{% endblock %}

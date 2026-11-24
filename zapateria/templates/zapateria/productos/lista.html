@@ -1,0 +1,48 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block content %}
+<h1>Productos</h1>
+
+{% if perms.zapateria.add_producto %}
+<p><a class="btn" href="{% url 'producto_create' %}">Nuevo producto</a></p>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Género</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td><a href="{% url 'producto_detail' producto.pk %}">{{ producto.nombre }}</a></td>
+            <td>{{ producto.marca }}</td>
+            <td>{{ producto.categoria }}</td>
+            <td>${{ producto.precio }}</td>
+            <td>{{ producto.stock }}</td>
+            <td>{{ producto.get_genero_display }}</td>
+            <td>
+                <a class="btn" href="{% url 'producto_detail' producto.pk %}">Ver</a>
+                {% if perms.zapateria.change_producto %}
+                <a class="btn" href="{% url 'producto_update' producto.pk %}">Editar</a>
+                {% endif %}
+                {% if perms.zapateria.delete_producto %}
+                <a class="btn btn-danger" href="{% url 'producto_delete' producto.pk %}">Eliminar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">No hay productos registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

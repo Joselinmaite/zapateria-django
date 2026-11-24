@@ -1,0 +1,14 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Eliminar venta{% endblock %}
+
+{% block content %}
+<h1>Eliminar venta</h1>
+<p>¿Seguro que quieres eliminar la venta a <strong>{{ venta.cliente }}</strong> del {{ venta.fecha_venta }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a class="btn" href="{% url 'venta_detail' venta.pk %}">Cancelar</a>
+</form>
+{% endblock %}

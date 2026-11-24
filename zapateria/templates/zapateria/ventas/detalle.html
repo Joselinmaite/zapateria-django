@@ -1,0 +1,33 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}Venta a {{ venta.cliente }}{% endblock %}
+
+{% block content %}
+<h1>Venta a {{ venta.cliente }}</h1>
+<p><strong>Fecha:</strong> {{ venta.fecha_venta }}</p>
+{% if venta.observaciones %}
+<p><strong>Observaciones:</strong> {{ venta.observaciones }}</p>
+{% endif %}
+
+<h3>Productos incluidos</h3>
+<ul>
+    {% for producto in venta.productos.all %}
+    <li>
+        <a href="{% url 'producto_detail' producto.pk %}">{{ producto.nombre }}</a>
+        - {{ producto.marca }} - ${{ producto.precio }}
+    </li>
+    {% empty %}
+    <li>No hay productos asociados.</li>
+    {% endfor %}
+</ul>
+
+<div class="actions">
+    <a class="btn" href="{% url 'venta_list' %}">Volver al listado</a>
+    {% if perms.zapateria.change_venta %}
+    <a class="btn" href="{% url 'venta_update' venta.pk %}">Editar</a>
+    {% endif %}
+    {% if perms.zapateria.delete_venta %}
+    <a class="btn btn-danger" href="{% url 'venta_delete' venta.pk %}">Eliminar</a>
+    {% endif %}
+</div>
+{% endblock %}

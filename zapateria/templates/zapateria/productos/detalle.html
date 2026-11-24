@@ -1,0 +1,34 @@
+{% extends 'zapateria/base.html' %}
+
+{% block title %}{{ producto.nombre }}{% endblock %}
+
+{% block content %}
+<h1>{{ producto.nombre }}</h1>
+
+<p><strong>Marca:</strong> <a href="{% url 'marca_detail' producto.marca.pk %}">{{ producto.marca }}</a></p>
+<p><strong>Categoría:</strong> <a href="{% url 'categoria_detail' producto.categoria.pk %}">{{ producto.categoria }}</a></p>
+<p><strong>Precio:</strong> ${{ producto.precio }}</p>
+<p><strong>Stock:</strong> {{ producto.stock }}</p>
+<p><strong>Género:</strong> {{ producto.get_genero_display }}</p>
+<p><strong>Fecha de ingreso:</strong> {{ producto.fecha_ingreso }}</p>
+<p>{{ producto.descripcion }}</p>
+
+<h3>Ventas que incluyen este producto</h3>
+<ul>
+    {% for venta in producto.ventas.all %}
+    <li><a href="{% url 'venta_detail' venta.pk %}">{{ venta }}</a></li>
+    {% empty %}
+    <li>Todavía no aparece en ninguna venta.</li>
+    {% endfor %}
+</ul>
+
+<div class="actions">
+    <a class="btn" href="{% url 'producto_list' %}">Volver al listado</a>
+    {% if perms.zapateria.change_producto %}
+    <a class="btn" href="{% url 'producto_update' producto.pk %}">Editar</a>
+    {% endif %}
+    {% if perms.zapateria.delete_producto %}
+    <a class="btn btn-danger" href="{% url 'producto_delete' producto.pk %}">Eliminar</a>
+    {% endif %}
+</div>
+{% endblock %}
